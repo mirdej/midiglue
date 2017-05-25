@@ -108,6 +108,8 @@ public:
 	void sendMIDI(void);
 	void flush(void);
 	
+	void begin(unsigned char = 0);
+	
 	void receiveMIDI(uint8_t,uint8_t,uint8_t);
 	
 	private:
@@ -124,6 +126,8 @@ public:
 		char * _sysex_buffer;
 		unsigned char _sysex_idx;
 		unsigned char _sysex_len;
+		
+		unsigned char _analog_midi_thru;
 
 };
 

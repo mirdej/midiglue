@@ -24,6 +24,13 @@
 #include "Arduino.h"
 #include "midiglue.h"
 
+/*void MIDIClass::begin(unsigned char mode){
+	_analog_midi_thru = mode;
+	if (mode) {
+		Serial.begin(31250);
+	}
+}
+*/
 
 void MIDIClass::write(unsigned char command, unsigned char pitch,unsigned char velocity, unsigned char channel){
 	if (channel > 0) channel--;
@@ -36,7 +43,13 @@ void MIDIClass::write(unsigned char command, unsigned char pitch,unsigned char v
 unsigned char MIDIClass::read(MIDIMessage* msg) {
  	midiEventPacket_t rx;
     rx = MidiUSB.read();
+
     if (rx.header != 0) {
+    	Serial.begin(31250);
+		Serial.write(rx.header);		
+		Serial.write(rx.byte2);
+		Serial.write(rx.byte3);
+		
 		msg->command 	= rx.header << 4;
    		msg->channel	= (rx.byte1 & 0x0F) + 1;
    		msg->key		= rx.byte2;
